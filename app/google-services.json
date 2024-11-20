@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "772049700153",
+    "project_id": "ecosage-94025",
+    "storage_bucket": "ecosage-94025.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772049700153:android:dc81a4c38cc9a63eba94e8",
+        "android_client_info": {
+          "package_name": "com.lucaslima.ecosage"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKn3D_8Icw2z0mq2h-G2Lb19l1iD4c5yE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
