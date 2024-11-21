@@ -1,0 +1,87 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#E8F5E9"
+    tools:context=".view.AdicionarContaActivity">
+
+    <TextView
+        android:id="@+id/textAdicionarContaTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Adicionar Conta"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#388E3C"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/editNomeAparelho"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Nome do aparelho"
+        android:inputType="text"
+        style="@style/EditTextStyle"
+        app:layout_constraintTop_toBottomOf="@id/textAdicionarContaTitulo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="50dp"/>
+
+    <EditText
+        android:id="@+id/editPotenciaAparelho"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Potência do aparelho (W)"
+        android:inputType="numberDecimal"
+        style="@style/EditTextStyle"
+        app:layout_constraintTop_toBottomOf="@id/editNomeAparelho"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/editHorasAparelho"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Horas de uso por dia"
+        android:inputType="numberDecimal"
+        style="@style/EditTextStyle"
+        app:layout_constraintTop_toBottomOf="@id/editPotenciaAparelho"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp" />
+
+    <EditText
+        android:id="@+id/editDiasAparelho"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Dias de uso durante o mês"
+        android:inputType="numberDecimal"
+        style="@style/EditTextStyle"
+        app:layout_constraintTop_toBottomOf="@id/editHorasAparelho"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnSalvarConta"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Salvar"
+        android:textColor="#FFFFFF"
+        android:backgroundTint="#66BB6A"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/editDiasAparelho"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>

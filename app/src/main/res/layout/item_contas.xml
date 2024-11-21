@@ -1,0 +1,69 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="8dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/textContasNome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Conta de Luz"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="#388E3C" />
+
+            <TextView
+                android:id="@+id/textContasPreco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R$ 150,00"
+                android:textSize="14sp"
+                android:textColor="#757575" />
+
+            <TextView
+                android:id="@+id/textContasEnergia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100 kWh"
+                android:textSize="14sp"
+                android:textColor="#757575" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnEditContas"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="10dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_edit_24"
+            android:contentDescription="Editar"
+            app:tint="#388E3C" />
+
+        <ImageButton
+            android:id="@+id/btnDeletarContas"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_delete_24"
+            android:contentDescription="Excluir"
+            app:tint="#D32F2F" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

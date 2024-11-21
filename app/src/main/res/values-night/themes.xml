@@ -1,7 +1,12 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.EcoSage" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <!-- Ajuste as cores para o modo escuro -->
+        <item name="colorPrimary">#388E3C</item>
+        <item name="colorPrimaryVariant">#2E7D32</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="android:colorBackground">#1B5E20</item>
+        <item name="colorOnBackground">#C8E6C9</item>
+        <item name="colorOnSurface">#A5D6A7</item>
     </style>
 </resources>
