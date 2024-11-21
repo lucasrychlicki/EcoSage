@@ -45,8 +45,10 @@ class ContasActivity : AppCompatActivity() {
 
         database = FirebaseDatabase.getInstance().getReference("contas")
 
+        carregarContas()
+
         // Mudanças no Firebase
-        database.addValueEventListener(object : ValueEventListener {
+        /*database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 contasList.clear()
                 for (contaSnapshot in snapshot.children) {
@@ -61,6 +63,35 @@ class ContasActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(this@ContasActivity, "Erro ao carregar as contas.", Toast.LENGTH_SHORT).show()
             }
+        })*/
+    }
+
+    private fun carregarContas() {
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                contasList.clear()
+                var consumoTotal = 0.0
+                var custoTotal = 0.0
+
+                for (data in snapshot.children) {
+                    val conta = data.getValue(Conta::class.java)
+                    conta?.let {
+                        contasList.add(it)
+                        consumoTotal += it.consumo
+                        custoTotal += it.custo
+                    }
+                }
+
+                contasAdapter.notifyDataSetChanged()
+
+                binding.textCustoTotal.text = "Custo Total: R$ %.2f".format(custoTotal)
+                binding.textConsumoTotal.text = "Consumo Total: %.2f kWh".format(consumoTotal)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Toast.makeText(this@ContasActivity, "Erro ao carregar as contas.", Toast.LENGTH_SHORT).show()
+            }
         })
+
     }
 }
