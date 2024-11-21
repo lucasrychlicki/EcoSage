@@ -6,6 +6,8 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.lucaslima.ecosage.R
 import com.lucaslima.ecosage.databinding.ActivityAdicionarContaBinding
@@ -15,6 +17,8 @@ import java.util.UUID
 class AdicionarContaActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityAdicionarContaBinding
+    private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,10 +26,17 @@ class AdicionarContaActivity : AppCompatActivity() {
         binding = ActivityAdicionarContaBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val database = FirebaseDatabase.getInstance()
-        val contasRef = database.getReference("contas")
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance().getReference("contas")
 
         binding.btnSalvarConta.setOnClickListener {
+            val usuarioId = auth.currentUser?.uid
+            if (usuarioId == null) {
+                Toast.makeText(this, "Usuário não autenticado!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+
             val nome = binding.editNomeAparelho.text.toString()
             val potencia = binding.editPotenciaAparelho.text.toString().toDoubleOrNull()
             val horasPorDia = binding.editHorasAparelho.text.toString().toDoubleOrNull()
@@ -41,9 +52,9 @@ class AdicionarContaActivity : AppCompatActivity() {
             val custo = consumo * 0.80
 
             // Criação da conta
-            val contaId = UUID.randomUUID().toString()
+            val novaContaId = database.child(usuarioId).push().key
             val conta = Conta(
-                id = contaId,
+                id = novaContaId ?: "",
                 nome = nome,
                 potencia = potencia,
                 horasPorDia = horasPorDia,
@@ -53,7 +64,7 @@ class AdicionarContaActivity : AppCompatActivity() {
             )
 
             // Salvando no Firebase
-            contasRef.child(contaId).setValue(conta)
+            database.child(usuarioId).child(conta.id).setValue(conta)
                 .addOnSuccessListener {
                     Toast.makeText(this, "Conta adicionada com sucesso!", Toast.LENGTH_SHORT).show()
                     finish()

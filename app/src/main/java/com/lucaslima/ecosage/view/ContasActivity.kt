@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -22,14 +23,17 @@ class ContasActivity : AppCompatActivity() {
     private lateinit var binding: ActivityContasBinding
     private lateinit var database: DatabaseReference
     private lateinit var contasAdapter: ContasAdapter
+    private lateinit var auth: FirebaseAuth
     private val contasList = mutableListOf<Conta>()
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityContasBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        
+
+        auth = FirebaseAuth.getInstance()
+        database = FirebaseDatabase.getInstance().getReference("contas")
+
         binding.rvContas.layoutManager = LinearLayoutManager(this)
         contasAdapter = ContasAdapter(contasList) {conta ->
             val intent = Intent(this, AtualizarContaActivity::class.java).apply {
@@ -43,31 +47,18 @@ class ContasActivity : AppCompatActivity() {
         }
         binding.rvContas.adapter = contasAdapter
 
-        database = FirebaseDatabase.getInstance().getReference("contas")
-
         carregarContas()
 
-        // Mudanças no Firebase
-        /*database.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                contasList.clear()
-                for (contaSnapshot in snapshot.children) {
-                    val conta = contaSnapshot.getValue(Conta::class.java)
-                    if (conta != null){
-                        contasList.add(conta)
-                    }
-                }
-                contasAdapter.notifyDataSetChanged()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(this@ContasActivity, "Erro ao carregar as contas.", Toast.LENGTH_SHORT).show()
-            }
-        })*/
     }
 
     private fun carregarContas() {
-        database.addValueEventListener(object : ValueEventListener {
+        val usuarioId = auth.currentUser?.uid
+        if (usuarioId == null) {
+            Toast.makeText(this, "Usuário não autenticado!", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        database.child(usuarioId).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 contasList.clear()
                 var consumoTotal = 0.0
