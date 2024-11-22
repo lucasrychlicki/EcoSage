@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.lucaslima.ecosage.databinding.ItemContasBinding
 import com.lucaslima.ecosage.model.Conta
@@ -26,8 +27,14 @@ class ContasAdapter(
             }
 
             binding.btnDeletarContas.setOnClickListener {
-                val database = FirebaseDatabase.getInstance().getReference("contas").child(conta.id)
-                database.removeValue()
+                val usuarioId = FirebaseAuth.getInstance().currentUser?.uid
+                if (usuarioId == null) {
+                    Toast.makeText(binding.root.context, "Usuário não autenticado!", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+
+                val database = FirebaseDatabase.getInstance().getReference("contas")
+                database.child(usuarioId).child(conta.id).removeValue()
                     .addOnSuccessListener {
                         Toast.makeText(binding.root.context, "Conta excluída com sucesso!", Toast.LENGTH_SHORT).show()
                     }
